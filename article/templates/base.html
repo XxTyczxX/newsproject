@@ -1,0 +1,170 @@
+<!-- 静的ファイルのURLを生成するstaticタグをロードする-->
+{% load static %}
+<!doctype html>
+<!-- 言語指定をenからjaに変更-->
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author"
+          content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.84.0">
+    <!-- ヘッダー情報のタイトルを個別に設定できるようにする-->
+    <title>{% block title %}{% endblock %}</title>
+    
+    <!-- staticでfavicon.icoのURLを生成する -->
+    <link rel="icon" type="image/x-icon"
+　　        href={% static 'assets/favicon.ico' %} />
+　　  
+    <!-- Bootstrap core CSS -->
+    <!-- Bootstrap core CSSを読み込むコードをBootstrapからコピー-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+          crossorigin="anonymous">
+    <link href="{% static 'css/styles123.css' %}" rel="stylesheet" />
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>    
+  </head>
+  
+  <body>
+    <!-- ページのヘッダー-->
+    <header>
+      <!-- ナビゲーションバーのヘッダー-->
+      <div class="collapse bg-dark" id="navbarHeader">
+        <div class="container">
+          <div class="row">
+            <div class="col-sm-8 col-md-7 py-4">
+              <!-- ヘッダーのタイトルと本文-->
+              <h4 class="text-white">この世の知らないことが知れます</h4>
+              <p class="text-muted">
+                誰でも参加できる闇ニュース投稿サイトです。<br>
+                自分で見つけたニュースならなんでも大丈夫です。<br>
+                でも、カテゴリに属するニュースに限ります。
+              </p>
+            </div>
+            <div class="col-sm-4 offset-md-1 py-4">
+              <h4 class="text-white">Contact</h4>
+              <ul class="list-unstyled">
+                <!-- ナビゲーションメニュー-->
+                {% if user.is_authenticated %}
+                <!-- ログイン中のメニュー-->
+                <li><a href="{% url 'article:mypage' %}"
+                       class="text-white">マイページ</a></li>
+                <li><a href="{% url 'accounts:logout' %}"
+                       class="text-white">ログアウト</a></li>
+                <li><a href="{% url 'password_reset' %}"
+                       class="text-white">パスワードのリセット</a></li>
+                <li><a href="mailto:admin@example.com"
+                       class="text-white">Email me</a></li>
+                <li><a href="{% url 'article:contact' %}"
+                       class="text-white">お問い合わせ</a></li>
+                {% else %}
+                <!-- ログイン状態ではない場合のメニュー-->
+                <li><a href="{% url 'accounts:signup' %}"
+                       class="text-white">サインアップ</a></li>
+                <li><a href="{% url 'accounts:login' %}"
+                       class="text-white">ログイン</a></li>
+                <li><a href="mailto:admin@example.com"
+                       class="text-white">Email me</a></li>
+                <li><a href="{% url 'article:contact' %}"
+                       class="text-white">お問い合わせ</a></li>
+                {% endif %}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- ナビゲーションバー-->
+      <div class="navbar navbar-dark bg-dark shadow-sm">
+        <div class="container">
+          <!-- トップページへのリンク-->
+          <a href="{% url 'article:index' %}"
+             class="navbar-brand d-flex align-items-center">
+             <svg 
+             xmlns="http://www.w3.org/2000/svg" 
+             width="24" height="30" 
+             fill="none" 
+             stroke="currentColor" 
+             stroke-linecap="square" 
+             stroke-linejoin="miter" 
+             stroke-width="1.5" 
+             viewBox="0 0 24 36" 
+             aria-hidden="true" 
+             class="news-icon">
+           <!-- 新聞の外枠 -->
+           <rect x="2" y="2" width="20" height="32" stroke="currentColor"/>
+         
+           <!-- 見出し部分 -->
+           <rect x="4" y="4" width="16" height="3" fill="currentColor"/>
+         
+           <!-- 横線 (記事内容) -->
+           <line x1="4" y1="10" x2="20" y2="10" />
+           <line x1="4" y1="12" x2="20" y2="12" />
+           <line x1="4" y1="14" x2="16" y2="14" />
+           <line x1="4" y1="16" x2="16" y2="16" />
+         
+           <!-- サムネイル (小さい四角形) -->
+           <rect x="4" y="20" width="8" height="6" stroke="currentColor" />
+         </svg>
+         
+         
+            <!-- リンクテキスト-->
+            <strong>この世の闇ニュース</strong>
+          </a>
+          <!-- トグルボタン-->
+          <button class="navbar-toggler"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#navbarHeader"
+                  aria-controls="navbarHeader"
+                  aria-expanded="false"
+                  aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+        </div>
+      </div>
+    </header>
+    
+    <!-- メインコンテンツ-->
+    <main>
+      <!-- <main>タグの要素をすべて削除して以下に書き換え-->
+      <!-- メインコンテンツの本体部分は各ページのテンプレートで埋め込む-->
+      {% block contents %}{% endblock %}
+    </main>
+    
+    <!-- フッター -->
+    {% block footer %}
+    <footer class="text-muted py-5">
+      <div class="container">
+        <p class="float-end mb-1">
+          <a href="{% url "article:index" %}">トップへ戻る</a>
+        </p>
+        <!-- フッターのテキストを任意のものに書き換え-->
+        <p class="mb-1">
+          この世の闇ニュース &copy; </p>
+      </div>
+    </footer>
+    {% endblock %}
+    
+    <!-- BootstrapからJavaScriptを読み込むコードをコピーして貼り付け-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>      
+  </body>
+</html>
